@@ -1,0 +1,96 @@
+Tournament Manager Backend - Schema & API Design
+
+DATABASE SCHEMA
+
+1.  Tournament
+
+-   id (PK)
+-   name
+-   start_date
+-   end_date
+-   status (UPCOMING, ONGOING, COMPLETED)
+
+2.  Team
+
+-   id (PK)
+-   name
+-   tournament_id (FK -> Tournament.id)
+
+3.  User
+
+-   id (PK)
+-   name
+-   email (UNIQUE)
+-   password (hashed)
+-   role (ADMIN, PLAYER)
+-   jersey_number
+-   position (GK, DEFENDER, MIDFIELDER, FORWARD)
+-   team_id (FK -> Team.id, NULL for ADMIN)
+
+Rules: - ADMIN -> team_id = NULL - PLAYER -> team_id NOT NULL
+
+4.  Fixture
+
+-   id (PK)
+-   tournament_id (FK)
+-   home_team_id (FK)
+-   away_team_id (FK)
+-   match_date
+-   home_score
+-   away_score
+-   status (SCHEDULED, COMPLETED)
+
+Winner is derived from scores.
+
+5.  Goal
+
+-   id (PK)
+-   fixture_id (FK)
+-   scorer_id (FK -> User.id)
+-   assist_player_id (FK -> User.id, nullable)
+-   minute
+
+RELATIONSHIPS
+
+Tournament ├── Teams └── Fixtures
+
+Team └── Users (Players)
+
+Fixture └── Goals
+
+REST APIs
+
+AUTH POST /auth/register POST /auth/login
+
+TOURNAMENT POST /tournaments GET /tournaments GET /tournaments/{id} PUT
+/tournaments/{id} DELETE /tournaments/{id}
+
+TEAM POST /teams GET /teams GET /teams/{id} PUT /teams/{id} DELETE
+/teams/{id}
+
+PLAYER POST /players GET /players GET /players/{id} PUT /players/{id}
+DELETE /players/{id} GET /players/me
+
+FIXTURE POST /fixtures GET /fixtures GET /fixtures/{id} PUT
+/fixtures/{id} DELETE /fixtures/{id}
+
+GOAL POST /goals PUT /goals/{id} DELETE /goals/{id}
+
+STATISTICS GET /leaderboard/{tournamentId} GET
+/stats/top-scorers/{tournamentId} GET /stats/top-assists/{tournamentId}
+GET /stats/player/{playerId} GET /stats/team/{teamId}
+
+PROJECT NOTES
+
+-   Spring Boot
+-   Java 21
+-   MySQL
+-   Spring Data JPA
+-   Lombok
+-   DTOs
+-   MapStruct (recommended)
+-   JWT Authentication (without Spring Security)
+-   Global Exception Handling
+-   Validation
+-   Layered Architecture (Controller -> Service -> Repository)
+-   Leaderboard generated from Fixture table (no leaderboard table)
