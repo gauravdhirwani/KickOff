@@ -19,5 +19,6 @@ public class UserResponseDto {
     private Role role;
     private int jersey_number;
     private Position position;
-    private long team_id;
+    private long teamId;
+    private String teamName;
 }

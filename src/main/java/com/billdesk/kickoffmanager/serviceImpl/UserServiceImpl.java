@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final UserMapper userMapper;
 
     @Override
     public LoginResponseDto register(RegisterRequestDto requestDto) {
@@ -62,5 +63,16 @@ public class UserServiceImpl implements UserService {
         String token = jwtUtil.generateToken(email);
         return new LoginResponseDto(token);
 
+    }
+    @Override
+    public UserResponseDto getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+        return userMapper.toDto(user);
+    }
+
+    @Override
+    public List<UserResponseDto> getAllUsers() {
+        return userMapper.toDtoList(userRepository.findAll());
     }
 }

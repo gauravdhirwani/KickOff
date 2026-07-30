@@ -9,4 +9,7 @@ public interface UserService {
     public LoginResponseDto register(RegisterRequestDto requestDto);
 
     public LoginResponseDto login(String email, String password);
+
+    UserResponseDto getUserById(Long id);
+    List<UserResponseDto> getAllUsers();
 }
