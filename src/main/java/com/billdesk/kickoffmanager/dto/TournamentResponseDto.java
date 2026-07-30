@@ -14,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TournamentResponseDto {
+    private Long id;
     private String name;
     private TournamentStatus status;
     private Date startDate;
