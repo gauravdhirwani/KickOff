@@ -12,4 +12,8 @@ public interface UserService {
 
     UserResponseDto getUserById(Long id);
     List<UserResponseDto> getAllUsers();
+
+    PlayerStatsDto getPlayerStats(Long playerId);
+    List<UserResponseDto> getUnassignedPlayers();
+    UserResponseDto assignPlayerToTeam(Long playerId, Long teamId);
 }

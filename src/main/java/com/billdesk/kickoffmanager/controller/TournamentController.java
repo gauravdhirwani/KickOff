@@ -19,8 +19,12 @@ public class TournamentController {
 
     @PostMapping
     public ResponseEntity<TournamentResponseDto> create(
-            @RequestBody TournamentRequestDto tournamentRequestDto
+            @RequestBody TournamentRequestDto tournamentRequestDto,
+            @RequestAttribute String userRole
             ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(tournamentService.createTournament(tournamentRequestDto.getName()));
     }
@@ -34,8 +38,12 @@ public class TournamentController {
 
     @PatchMapping("/{id}/end")
     public ResponseEntity<TournamentResponseDto> endTourney(
-            @PathVariable Long id
+            @PathVariable Long id,
+            @RequestAttribute String userRole
     ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.ok(tournamentService.endTournament(id));
     }
 

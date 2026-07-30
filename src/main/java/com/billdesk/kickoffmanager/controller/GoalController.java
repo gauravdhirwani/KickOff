@@ -36,8 +36,12 @@ public class GoalController {
 
     @PostMapping
     public ResponseEntity<GoalResponseDto> createGoal(
-            @RequestBody CreateGoalRequest createGoalRequest
+            @RequestBody CreateGoalRequest createGoalRequest,
+            @RequestAttribute String userRole
             ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 goalService.createGoal(createGoalRequest)
         );

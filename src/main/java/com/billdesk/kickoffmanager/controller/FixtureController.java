@@ -18,8 +18,12 @@ public class FixtureController {
 
     @PostMapping
     public ResponseEntity<FixtureResponseDto> createFixture(
-            @RequestBody CreateFixtureRequestDto createFixtureRequestDto
+            @RequestBody CreateFixtureRequestDto createFixtureRequestDto,
+            @RequestAttribute String userRole
             ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 service.createFixture(createFixtureRequestDto)
         );

@@ -37,14 +37,54 @@ public class AuthController {
         );
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDto> getMe(@RequestAttribute Long userId) {
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserResponseDto> getUserById(
+            @PathVariable Long id,
+            @RequestAttribute String userRole
+    ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> getAllUsers() {
+    public ResponseEntity<List<UserResponseDto>> getAllUsers(
+            @RequestAttribute String userRole
+    ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/{playerId}/stats")
+    public ResponseEntity<PlayerStatsDto> getPlayerStats(@PathVariable Long playerId) {
+        return ResponseEntity.ok(userService.getPlayerStats(playerId));
+    }
+
+    @GetMapping("/players/unassigned")
+    public ResponseEntity<List<UserResponseDto>> getUnassignedPlayers(@RequestAttribute String userRole) {
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
+        return ResponseEntity.ok(userService.getUnassignedPlayers());
+    }
+
+    @PatchMapping("/{id}/assign-team")
+    public ResponseEntity<UserResponseDto> assignPlayerToTeam(
+            @PathVariable Long id,
+            @RequestParam Long teamId,
+            @RequestAttribute String userRole) {
+
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
+        return ResponseEntity.ok(userService.assignPlayerToTeam(id, teamId));
     }
 }

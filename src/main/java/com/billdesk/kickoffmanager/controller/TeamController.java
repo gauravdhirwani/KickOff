@@ -35,8 +35,12 @@ public class TeamController {
 
     @PostMapping()
     public ResponseEntity<TeamResponseDto> createTeam(
-            @RequestBody TeamRequestDto requestDto
+            @RequestBody TeamRequestDto requestDto,
+            @RequestAttribute String userRole
             ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.createTeam(requestDto.getName(), requestDto.getTournamentId()));
     }
