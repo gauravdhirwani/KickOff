@@ -3,10 +3,14 @@ package com.billdesk.kickoffmanager.service;
 import com.billdesk.kickoffmanager.dto.TournamentResponseDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface TournamentService {
-    public ResponseEntity<String> createTournament(String name);
+    public TournamentResponseDto createTournament(String name);
 
-    public ResponseEntity<String> endTournament();
+    public TournamentResponseDto endTournament(Long id);
 
-    public TournamentResponseDto displayTournament();
+    public TournamentResponseDto displayTournament(Long id);
+
+    public List<TournamentResponseDto> displayAllTournaments();
 }
