@@ -14,5 +14,6 @@ public class CreateGoalRequest {
     private Long fixtureId;
     private Long scorerId;
     private Long assistId;
+    private Long scorerTeamId;
     private int minute;
 }

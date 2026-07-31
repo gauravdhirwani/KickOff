@@ -12,4 +12,6 @@ public class DashboardStatsDto {
     private long totalUsers;
     private long totalAdmins;
     private long totalTeams;
+    private PlayerStatDto highestScorer;
+    private PlayerStatDto highestAssister;
 }

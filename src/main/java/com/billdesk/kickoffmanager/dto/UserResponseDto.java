@@ -17,7 +17,7 @@ public class UserResponseDto {
     private String name;
     private String email;
     private Role role;
-    private int jersey_number;
+    private int jerseyNumber;
     private Position position;
     private long teamId;
     private String teamName;

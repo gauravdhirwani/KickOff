@@ -13,6 +13,8 @@ public interface FixtureMapper {
     @Mapping(target = "tournamentName", source = "tournament.name")
     @Mapping(target = "homeTeam", source = "homeTeam.name")
     @Mapping(target = "awayTeam", source = "awayTeam.name")
+    @Mapping(target = "homeTeamId", source = "homeTeam.id")
+    @Mapping(target = "awayTeamId", source = "awayTeam.id")
     FixtureResponseDto toDto(Fixture fixture);
 
     List<FixtureResponseDto> toListDto(List<Fixture> fixtures);

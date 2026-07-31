@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    public LoginResponseDto register(RegisterRequestDto requestDto);
+    public LoginResponseDto register(UserRequestDto requestDto);
 
     public LoginResponseDto login(String email, String password);
 

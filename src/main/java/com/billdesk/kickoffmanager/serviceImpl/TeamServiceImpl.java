@@ -1,14 +1,17 @@
 package com.billdesk.kickoffmanager.serviceImpl;
 
 import com.billdesk.kickoffmanager.dto.TeamResponseDto;
+import com.billdesk.kickoffmanager.dto.UserResponseDto;
 import com.billdesk.kickoffmanager.entity.Team;
 import com.billdesk.kickoffmanager.entity.Tournament;
 import com.billdesk.kickoffmanager.mapper.TeamMapper;
+import com.billdesk.kickoffmanager.mapper.UserMapper;
 import com.billdesk.kickoffmanager.repository.TeamRepository;
 import com.billdesk.kickoffmanager.repository.TournamentRepository;
 import com.billdesk.kickoffmanager.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +22,7 @@ public class TeamServiceImpl implements TeamService {
     private final TeamMapper teamMapper;
     private final TeamRepository teamRepository;
     private final TournamentRepository tournamentRepository;
+    private final UserMapper userMapper;
 
     @Override
     public TeamResponseDto createTeam(String name, Long tournament_id) {
@@ -40,6 +44,16 @@ public class TeamServiceImpl implements TeamService {
                         new RuntimeException("Team not found!"));
 
         return teamMapper.toDto(team);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<UserResponseDto> getPlayersInTeam(Long teamId) {
+
+        Team team = teamRepository.findById(teamId)
+                .orElseThrow(() -> new RuntimeException("Team not found!"));
+
+        return userMapper.toDtoList(team.getPlayers());
     }
 
     @Override

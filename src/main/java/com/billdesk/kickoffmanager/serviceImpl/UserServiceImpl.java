@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     private final TeamRepository teamRepository;
 
     @Override
-    public LoginResponseDto register(RegisterRequestDto requestDto) {
+    public LoginResponseDto register(UserRequestDto requestDto) {
 
         if(userRepository.findByEmail(requestDto.getEmail()).isPresent()){
             throw new RuntimeException("User is already registered!");

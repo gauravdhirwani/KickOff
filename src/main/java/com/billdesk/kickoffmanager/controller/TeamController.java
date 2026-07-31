@@ -4,6 +4,7 @@ package com.billdesk.kickoffmanager.controller;
 import com.billdesk.kickoffmanager.dto.TeamRequestDto;
 import com.billdesk.kickoffmanager.dto.TeamResponseDto;
 import com.billdesk.kickoffmanager.dto.TournamentResponseDto;
+import com.billdesk.kickoffmanager.dto.UserResponseDto;
 import com.billdesk.kickoffmanager.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 public class TeamController {
 
     private final TeamService service;
+
 
     @GetMapping("/{id}")
     public ResponseEntity<TeamResponseDto> getTeam(
@@ -43,6 +45,11 @@ public class TeamController {
         }
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.createTeam(requestDto.getName(), requestDto.getTournamentId()));
+    }
+
+    @GetMapping("/{id}/players")
+    public ResponseEntity<List<UserResponseDto>> getPlayersInTeam(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getPlayersInTeam(id));
     }
 
 }

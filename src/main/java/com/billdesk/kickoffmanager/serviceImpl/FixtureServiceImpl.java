@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 
+import static com.billdesk.kickoffmanager.enums.FixtureStatus.COMPLETED;
 import static com.billdesk.kickoffmanager.enums.FixtureStatus.SCHEDULED;
 
 @Service
@@ -70,5 +71,15 @@ public class FixtureServiceImpl implements FixtureService {
         return fixtureMapper.toListDto(
                 fixtureRepository.findAll()
         );
+    }
+
+    @Override
+    public FixtureResponseDto endFixture(Long id) {
+        Fixture fixture = fixtureRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Fixture not found!"));
+        fixture.setStatus(COMPLETED);
+        fixture.setMatchDate(new Date());
+        return fixtureMapper.toDto(fixtureRepository.save(fixture));
     }
 }

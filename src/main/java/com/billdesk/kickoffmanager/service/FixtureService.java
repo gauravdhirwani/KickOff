@@ -15,4 +15,6 @@ public interface FixtureService {
 
     public List<FixtureResponseDto> getAllFixtures();
 
+    public FixtureResponseDto endFixture(Long id);
+
 }

@@ -18,7 +18,9 @@ import java.util.Date;
 public class FixtureResponseDto {
     private long id;
     private String  tournamentName;
+    private Long homeTeamId;
     private String homeTeam;
+    private Long awayTeamId;
     private String awayTeam;
     private Date matchDate;
     private int homeScore;

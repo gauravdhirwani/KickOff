@@ -41,4 +41,17 @@ public class FixtureController {
                 service.getFixtureById(id)
         );
     }
+
+    @PatchMapping("/{id}/end")
+    public ResponseEntity<FixtureResponseDto> endFuxture(
+            @PathVariable Long id,
+            @RequestAttribute String userRole
+    ){
+        if (!"ADMIN".equals(userRole)) {
+            throw new RuntimeException("Only admins can do this");
+        }
+        return ResponseEntity.ok(
+                service.endFixture(id)
+        );
+    }
 }
