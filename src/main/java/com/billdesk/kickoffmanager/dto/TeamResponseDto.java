@@ -17,5 +17,5 @@ public class TeamResponseDto {
     private Long id;
     private String name;
     private Long tournamentId;
-    private List<User> players;
+    private List<UserResponseDto> players;
 }

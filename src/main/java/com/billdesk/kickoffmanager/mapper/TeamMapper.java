@@ -7,11 +7,9 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring",  uses = { UserMapper.class })
 public interface TeamMapper {
     List<TeamResponseDto> toDtoList(List<Team> teams);
-
-     Team toEntity(TeamResponseDto dto);
 
      @Mapping(target = "tournamentId", source = "tournament.id")
     TeamResponseDto toDto(Team team);
